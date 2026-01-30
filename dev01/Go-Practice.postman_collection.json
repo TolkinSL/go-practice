@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "dc13ecb1-f89e-4fdc-a5c7-24d13c40a442",
+		"name": "Go-Practice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32056080"
+	},
+	"item": [
+		{
+			"name": "dev01",
+			"item": [
+				{
+					"name": "Запрос_Стран",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"countries\": [\"Usa\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/about_country"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
