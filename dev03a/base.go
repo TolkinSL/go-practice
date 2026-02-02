@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"unsafe"
 )
 
@@ -42,5 +43,17 @@ func main() {
 	// 	Len int // 8 byte
 	// }
 	
-	
+	fmt.Println("\nFizzBuzz program")
+	for i := 1; i <= 10; i++ {
+		x := rand.Intn(100) + 1
+		if x % 3 == 0 && x % 5 == 0 {
+			fmt.Println("FizzBuzz")
+		} else if x % 3 == 0 {
+			fmt.Println("Fizz")
+		} else if x % 5 == 0 {
+			fmt.Println("Buzz")
+		}
+
+		fmt.Println(x)
+	}
 }
