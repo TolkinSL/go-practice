@@ -1,13 +1,10 @@
 package unpacker
 
 import (
-	"errors"
-	"strconv"
+	"fmt"
 	"strings"
 	"unicode"
 )
-
-var ErrInvalidString = errors.New("invalid string format")
 
 func Unpack(s string) (string, error) {
 	r := []rune(s)
@@ -15,29 +12,45 @@ func Unpack(s string) (string, error) {
 	if len(r) == 0 {
 		return "", nil
 	}
-	
-	
+
 	if unicode.IsDigit(r[0]) {
-		return "", ErrInvalidString
+		return "", fmt.Errorf("строка начинается с цифры: %s", string(r))
 	}
-	
+
 	var myStr strings.Builder
 	var prevRune rune
+	var canRepeat bool
+	var isEscaped bool
 
 	for _, myRune := range r {
+		if myRune == '\\' && !isEscaped {
+			isEscaped = true
+			continue
+		}
 
-		if unicode.IsDigit(myRune) {
-			num, _ := strconv.Atoi(string(myRune))
+		if unicode.IsDigit(myRune) && !isEscaped {
+			if !canRepeat {
+				return "", fmt.Errorf("идет цифра после цифры: %s", string(r))
+			}
 
-			for i := 0; i < num - 1; i++ {
+			num := int(myRune - '0')
+
+			for i := 0; i < num-1; i++ {
 				myStr.WriteRune(prevRune)
 			}
 
-			continue // Переход к следующей руне
+			canRepeat = false
+			continue
 		}
 
 		myStr.WriteRune(myRune)
 		prevRune = myRune
+		canRepeat = true
+		isEscaped = false
+	}
+
+	if isEscaped {
+		return "", fmt.Errorf("последний escape символ \\ не закрыт: %s", string(r))
 	}
 
 	return myStr.String(), nil
