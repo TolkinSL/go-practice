@@ -18,6 +18,7 @@ func worker(ctx context.Context, wg *sync.WaitGroup, worker int, ch chan <- stri
 		case <- ticker.C:
 			ch <- fmt.Sprintf("Hi worker : %d", worker)
 		case <- ctx.Done():
+			fmt.Println("ctx.Done()")
 			return
 		}
 		
