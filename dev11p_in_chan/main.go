@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func workerIn(in chan string, wg *sync.WaitGroup) {
+func worker(in chan string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	fmt.Println("Goroutune start")
 
@@ -15,7 +15,7 @@ func workerIn(in chan string, wg *sync.WaitGroup) {
 		time.Sleep(time.Second)
 	}
 
-	fmt.Println("Goroutune end")
+	fmt.Println("Goroutines end work!")
 }
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	in := make(chan string)
 
 	wg.Add(1)
-	go workerIn(in, &wg)
+	go worker(in, &wg)
 
 	in <- "Msg1"
 	in <- "Msg2"
@@ -33,5 +33,5 @@ func main() {
 	close(in)
 
 	wg.Wait()
-	fmt.Println("Program end!")
+	fmt.Println("Program end work!")
 }

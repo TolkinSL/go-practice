@@ -11,7 +11,7 @@ func worker(str string, wg *sync.WaitGroup) {
 
 	fmt.Println("Goroutine Start:", str)
 	time.Sleep(time.Second)
-	fmt.Println("Goroutine End:", str)
+	fmt.Println("Goroutines end work!", str)
 }
 
 func main() {
